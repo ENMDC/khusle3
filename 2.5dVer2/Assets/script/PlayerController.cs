@@ -17,13 +17,9 @@ public class PlayerController : MonoBehaviour
     {
         float x = Input.GetAxis("Horizontal");
         float z = Input.GetAxis("Vertical");
-        float y = Input .GetAxis("UPANDDOWN");
+        float y = Input .GetAxis("JetPackMovement");
         Vector3 moveDir = new Vector3(x, y, z);
         rb.linearVelocity = moveDir * speed;
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
-        }
 
     }
 }
