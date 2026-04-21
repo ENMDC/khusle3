@@ -6,7 +6,8 @@ public class Controller : MonoBehaviour
     [SerializeField] private Transform cameraTransform;
     [SerializeField] private float speed=5f;
     [SerializeField] private float jumpHeight=2f;
-    [SerializeField] private float oxygenCapacity = 1000000f;
+    [SerializeField] private float oxygenCapacity = 1000f;
+    [SerializeField] private float oxygen= 1000f;
     [SerializeField] private float oxygenConsumptionRate =1f;
     [SerializeField] private float oxygenJetConsumptionRate = 2;
     [SerializeField] private float gravity = -9.8f;
@@ -17,7 +18,6 @@ public class Controller : MonoBehaviour
     private Vector2 moveInput;
     private Vector3 velocity;
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         controller = GetComponent<CharacterController>();
@@ -46,18 +46,19 @@ public class Controller : MonoBehaviour
     void Update()
     {
         //oxygen consumption
-        Debug.Log($"Oxygen Level: {oxygenCapacity}");
-        if (oxygenCapacity >= 0)
+        Debug.Log($"Oxygen Capacity: {oxygenCapacity}/Oxygen Level: {oxygen}");
+        if (oxygenCapacity >= oxygen &&  oxygen >= 0)
         {
-            oxygenCapacity -= oxygenConsumptionRate *Time.deltaTime;
+            oxygen -= oxygenConsumptionRate *Time.deltaTime;
         }
         else
         {
             Debug.Log($"Out of oxygen! You died");
+
         }
-        if (oxygenCapacity>=0 && Input.GetKeyDown(KeyCode.Space))
+        if (oxygenCapacity >= oxygen && oxygen >= 0 && Input.GetKeyDown(KeyCode.Space))
         {
-            oxygenCapacity -= oxygenJetConsumptionRate;
+            oxygen -= oxygenJetConsumptionRate;
         }
 
         //player movement
