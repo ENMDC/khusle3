@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class Controller : MonoBehaviour
+public class Player : MonoBehaviour
 {
     [SerializeField] private Transform cameraTransform;
     [SerializeField] private float speed=5f;
@@ -17,6 +17,18 @@ public class Controller : MonoBehaviour
     private CharacterController controller;
     private Vector2 moveInput;
     private Vector3 velocity;
+    private static Player instance;
+    public static Player Instance
+    {
+        get 
+        {
+            if (instance == null)
+            {
+                Debug.LogError("Player is null");
+            }
+            return instance; 
+        }
+    }
 
     void Start()
     {
@@ -47,14 +59,20 @@ public class Controller : MonoBehaviour
     {
         //oxygen consumption
         Debug.Log($"Oxygen Capacity: {oxygenCapacity}/Oxygen Level: {oxygen}");
-        if (oxygenCapacity >= oxygen &&  oxygen >= 0)
+        if (oxygenCapacity >= oxygen)
         {
-            oxygen -= oxygenConsumptionRate *Time.deltaTime;
+            if (oxygen >= 0)
+            {
+               oxygen -= oxygenConsumptionRate *Time.deltaTime;
+            }
+            else
+            {
+               Debug.Log($"Out of oxygen! You died");
+            }
         }
         else
         {
-            Debug.Log($"Out of oxygen! You died");
-
+            oxygen = oxygenCapacity;
         }
         if (oxygenCapacity >= oxygen && oxygen >= 0 && Input.GetKeyDown(KeyCode.Space))
         {
@@ -86,5 +104,14 @@ public class Controller : MonoBehaviour
         //jump
         velocity.y += gravity * Time.deltaTime;
         controller.Move(velocity * Time.deltaTime);
+    }
+
+    private void Awake()
+    {
+        instance = this;
+    }
+    public void AddOxygen()
+    {
+        oxygen = oxygen + 100;
     }
 }
