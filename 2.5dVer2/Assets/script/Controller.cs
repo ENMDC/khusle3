@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class Player : MonoBehaviour
+public class Controller : MonoBehaviour
 {
     [SerializeField] private Transform cameraTransform;
     [SerializeField] private float speed=5f;
@@ -17,8 +17,8 @@ public class Player : MonoBehaviour
     private CharacterController controller;
     private Vector2 moveInput;
     private Vector3 velocity;
-    private static Player instance;
-    public static Player Instance
+    private static Controller instance;
+    public static Controller Instance
     {
         get 
         {
@@ -39,16 +39,16 @@ public class Player : MonoBehaviour
     public void OnMove(InputAction.CallbackContext context)
     {
         moveInput = context.ReadValue<Vector2>();
-        Debug.Log($"Move Input: {moveInput}");
+        //Debug.Log($"Move Input: {moveInput}");
 
     }
     public void OnJump
         (InputAction.CallbackContext context)
     {
-        Debug.Log($"Jumping {context.performed} - Is Grounded: {controller.isGrounded}");
+       // Debug.Log($"Jumping {context.performed} - Is Grounded: {controller.isGrounded}");
         if (context.performed)
         {
-            Debug.Log("We are supposed to jump!");
+           // Debug.Log("We are supposed to jump!");
             velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
            
         }
@@ -58,7 +58,7 @@ public class Player : MonoBehaviour
     void Update()
     {
         //oxygen consumption
-        Debug.Log($"Oxygen Capacity: {oxygenCapacity}/Oxygen Level: {oxygen}");
+        //Debug.Log($"Oxygen Capacity: {oxygenCapacity}/Oxygen Level: {oxygen}");
         if (oxygenCapacity >= oxygen)
         {
             if (oxygen >= 0)

@@ -10,7 +10,7 @@ public class Tank : MonoBehaviour
     {
         if(other.tag == "Player")
         {
-            Player.Instance.AddOxygen();
+            Controller.Instance.AddOxygen();
             Debug.Log("you add Your Oxygen");
             Destroy(gameObject);
         }
