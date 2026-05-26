@@ -11,7 +11,7 @@ public class TankGenerator : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        CreateTank(5);
+        CreateTank(8);
     }
     void CreateTank(int num)
     {
